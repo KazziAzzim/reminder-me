@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:ReminderMe.ViewModels"
+             x:Class="ReminderMe.MainPage"
+             x:DataType="viewModels:MainViewModel"
+             Title="ReminderMe">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="16">
+            <Label Text="Talk to your app in plain English" FontSize="24" FontAttributes="Bold" />
+            <Label Text="Example: hey myapp, can you please remind me to take meeting at 5 pm today"
+                   TextColor="Gray" />
+
+            <Editor Placeholder="Type your reminder request..."
+                    AutoSize="TextChanges"
+                    Text="{Binding InputText}"
+                    HeightRequest="120" />
+
+            <Button Text="Create Reminder"
+                    Command="{Binding CreateReminderCommand}" />
+
+            <Label Text="{Binding StatusMessage}"
+                   TextColor="DarkGreen"
+                   FontAttributes="Italic" />
+
+            <Label Text="Upcoming reminders" FontAttributes="Bold" FontSize="20" />
+            <CollectionView ItemsSource="{Binding Reminders}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:ReminderDisplayItem">
+                        <Frame BorderColor="#DDDDDD" CornerRadius="12" Padding="12" Margin="0,4">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="{Binding Description}" FontAttributes="Bold" />
+                                <Label Text="{Binding DueAtText}" TextColor="Gray" />
+                                <Label Text="{Binding StatusText}" TextColor="DarkSlateBlue" />
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
