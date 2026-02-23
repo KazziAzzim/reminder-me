@@ -9,22 +9,16 @@ namespace ReminderMe.ViewModels;
 
 public sealed class MainViewModel : INotifyPropertyChanged
 {
-    private const string WakePhrase = "hey myapp add reminder";
-
     private readonly ReminderParser _parser;
     private readonly ReminderService _service;
-    private readonly IVoiceInputService _voiceInputService;
-
     private string _inputText = string.Empty;
     private string _statusMessage = "Ready to create reminders.";
-    private bool _isListening;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public ObservableCollection<ReminderDisplayItem> Reminders { get; } = [];
 
     public ICommand CreateReminderCommand { get; }
-    public ICommand StartVoiceCommand { get; }
 
     public string InputText
     {
@@ -38,52 +32,14 @@ public sealed class MainViewModel : INotifyPropertyChanged
         set => SetProperty(ref _statusMessage, value);
     }
 
-    public bool IsListening
-    {
-        get => _isListening;
-        set => SetProperty(ref _isListening, value);
-    }
-
-    public MainViewModel(ReminderParser parser, ReminderService service, IVoiceInputService voiceInputService)
+    public MainViewModel(ReminderParser parser, ReminderService service)
     {
         _parser = parser;
         _service = service;
-        _voiceInputService = voiceInputService;
         _service.ReminderTriggered += OnReminderTriggered;
 
         CreateReminderCommand = new Command(CreateReminder);
-        StartVoiceCommand = new Command(async () => await ListenAndCreateReminderAsync());
         RefreshReminders();
-    }
-
-    private async Task ListenAndCreateReminderAsync()
-    {
-        if (IsListening)
-        {
-            return;
-        }
-
-        IsListening = true;
-        StatusMessage = "Listening for voice command...";
-
-        var result = await _voiceInputService.ListenAsync(CancellationToken.None);
-        IsListening = false;
-
-        if (!result.Success)
-        {
-            StatusMessage = result.Error;
-            return;
-        }
-
-        InputText = result.Text;
-        if (InputText.Contains(WakePhrase, StringComparison.OrdinalIgnoreCase))
-        {
-            CreateReminder();
-        }
-        else
-        {
-            StatusMessage = "Voice captured. Say 'Hey myapp add reminder ...' to auto-create.";
-        }
     }
 
     private async void OnReminderTriggered(object? sender, ReminderItem reminder)

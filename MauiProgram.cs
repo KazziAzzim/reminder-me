@@ -1,4 +1,3 @@
-using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using ReminderMe.Services;
 using ReminderMe.ViewModels;
@@ -11,12 +10,10 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
-            .UseMauiApp<App>()
-            .UseMauiCommunityToolkit();
+            .UseMauiApp<App>();
 
         builder.Services.AddSingleton<ReminderParser>();
         builder.Services.AddSingleton<ReminderService>();
-        builder.Services.AddSingleton<IVoiceInputService, VoiceInputService>();
         builder.Services.AddSingleton<MainViewModel>();
         builder.Services.AddSingleton<MainPage>();
         builder.Services.AddSingleton<AppShell>();

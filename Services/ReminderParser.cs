@@ -68,7 +68,6 @@ public sealed class ReminderParser
             .Replace("can you please", string.Empty, StringComparison.OrdinalIgnoreCase)
             .Replace("remind me to", string.Empty, StringComparison.OrdinalIgnoreCase)
             .Replace("remind me", string.Empty, StringComparison.OrdinalIgnoreCase)
-            .Replace("add reminder", string.Empty, StringComparison.OrdinalIgnoreCase)
             .Replace("today", string.Empty, StringComparison.OrdinalIgnoreCase)
             .Replace("tomorrow", string.Empty, StringComparison.OrdinalIgnoreCase)
             .Replace("at", string.Empty, StringComparison.OrdinalIgnoreCase)

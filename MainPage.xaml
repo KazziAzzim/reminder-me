@@ -9,16 +9,8 @@
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="16">
             <Label Text="Talk to your app in plain English" FontSize="24" FontAttributes="Bold" />
-            <Label Text="Voice wake phrase: Hey myapp add reminder..." TextColor="Gray" />
-            <Label Text="Example: hey myapp add reminder to take meeting at 5 pm today"
+            <Label Text="Example: hey myapp, can you please remind me to take meeting at 5 pm today"
                    TextColor="Gray" />
-
-            <HorizontalStackLayout Spacing="12">
-                <Button Text="🎤 Voice Command"
-                        Command="{Binding StartVoiceCommand}" />
-                <ActivityIndicator IsRunning="{Binding IsListening}"
-                                   IsVisible="{Binding IsListening}" />
-            </HorizontalStackLayout>
 
             <Editor Placeholder="Type your reminder request..."
                     AutoSize="TextChanges"
